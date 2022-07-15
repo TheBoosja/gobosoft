@@ -1,87 +1,87 @@
-import React from 'react'
-import {Image} from 'p5';
-import {ReactP5Wrapper, Sketch} from 'react-p5-wrapper'
-import {getSetupBg, getSetupV0, getSetupV1, getSetupV2, SetupResponse} from './config';
-import {Tile, Grid} from './models';
-import {withRotatedTilesFromP5} from './utilities';
+import { Image } from 'p5';
+import { useEffect, useState } from 'react';
+import { ReactP5Wrapper, Sketch } from 'react-p5-wrapper';
+import { getSetupV0, getSetupV1, getSetupV2, ConfigResponse } from './config';
+import { Tile, Grid, Framerate } from './models';
+import { withRotatedTilesFromP5 } from './utilities';
 
-const setups = [
-  () => getSetupV0(),
-  () => getSetupV1(),
-  () => getSetupV2(),
-]
+const setups = [() => getSetupV0(), () => getSetupV1(), () => getSetupV2()];
 
-interface sketch {
-  tileImgs: Image[]
-  tiles: Tile[]
-  grid: Grid | null
+const sketch =
+	(isOptimized: boolean): Sketch =>
+	(p5) => {
+		const DIMENSION = 32;
+		const SIZE = 800;
 
-  setup: SetupResponse
-}
+		const tileImgs: Image[] = [];
+		let tiles: Tile[] = [];
+		let grid: Grid | null = null;
+		const config: ConfigResponse = setups[0]();
 
-const sketch: Sketch = (p5) => {
-  const DIMENSION = 32;
-  const SIZE = 600;
+		Grid.DEBUG = false;
+		Grid.TEST = false;
+		// Logs framerate
+		Framerate.enable(false);
 
-  const sketches: sketch[] = [
-    {
-      tileImgs: [],
-      tiles: [],
-      grid: null,
-      setup: setups[2]()
-    },
-  ]
+		p5.preload = () => {
+			const [imageCount, getPath] = config;
+			for (let i = 0; i < imageCount; i++) {
+				tileImgs.push(p5.loadImage(`assets/${getPath(i)}`));
+			}
+		};
 
-  Grid.DEBUG = false
-  Grid.TEST = false
+		p5.setup = () => {
+			p5.createCanvas(SIZE, SIZE);
 
-  p5.preload = () => {
-    for (const s of sketches) {
-      const [imageCount, getPath] = s.setup
-      for (let i = 0; i < imageCount; i++) {
-        s.tileImgs.push(p5.loadImage(`assets/${getPath(i)}`))
-      }
-    }
-  }
+			const getInitialTiles = config[2];
+			const initialTiles = getInitialTiles(tileImgs);
+			const withRotatedTiles = withRotatedTilesFromP5(p5);
+			tiles = withRotatedTiles(initialTiles);
 
-  p5.setup = () => {
-    p5.createCanvas(SIZE, SIZE)
+			for (const tile of tiles) {
+				tile.analyze(tiles);
+			}
 
-    for (const s of sketches) {
-      const getInitialTiles = s.setup[2]
-      const initialTiles = getInitialTiles(s.tileImgs)
-      const withRotatedTiles = withRotatedTilesFromP5(p5)
-      s.tiles = withRotatedTiles(initialTiles)
+			grid = new Grid(DIMENSION, tiles);
 
-      for (const tile of s.tiles) {
-        tile.analyze(s.tiles)
-      }
+			// p5.noLoop();
+		};
 
-      s.grid = new Grid(DIMENSION, s.tiles)
-    }
+		p5.mousePressed = () => {
+			grid!.reset();
+			// p5.redraw();
+		};
 
-    //p5.noLoop()
-  }
+		p5.draw = () => {
+			p5.background('#d6d6d6');
 
-  p5.mousePressed = () => {
-    for (const s of sketches) {
-      s.grid!.reset()
-    }
-  }
-
-  p5.draw = () => {
-    p5.background('#d6d6d6')
-
-    for (const s of sketches) {
-      s.grid!.draw(p5)
-      s.grid!.update()
-    }
-  }
-}
+			grid!.draw(p5);
+			if (isOptimized) {
+				grid!.updateOptimized();
+			} else {
+				grid!.update();
+			}
+		};
+	};
 
 const WaveFunctionCollapse = () => {
-  return <ReactP5Wrapper sketch={sketch} />
-}
+	const [isOptimized, setOptimized] = useState(true);
 
-export default WaveFunctionCollapse
+	useEffect(() => {
+		return () => Framerate.clear();
+	}, []);
 
+	return (
+		<div>
+			<button onClick={() => setOptimized(!isOptimized)}>
+				{isOptimized ? 'Normal' : 'Optimized'}
+			</button>
+			<div>
+				<div>{isOptimized ? 'Optimized' : 'Normal'}</div>
+				<ReactP5Wrapper sketch={sketch(isOptimized)} />
+			</div>
+		</div>
+	);
+};
+
+export default WaveFunctionCollapse;
