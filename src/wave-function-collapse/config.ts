@@ -34,24 +34,25 @@ export const getSetupBg = (): ConfigResponse => {
 };
 
 export const getSetupV0 = (): ConfigResponse => {
+	// Coding train
 	return [
 		13,
 		(idx) => `circuit/${idx}.png`,
 		(images) => {
 			const configs: Config[] = [
-				{ edges: ['AAAAA', 'AAAAA', 'AAAAA', 'AAAAA'] },
-				{ edges: ['BBBBB', 'BBBBB', 'BBBBB', 'BBBBB'] },
-				{ edges: ['BBBBB', 'BCCCB', 'BBBBB', 'BBBBB'] },
-				{ edges: ['BBBBB', 'BDDDB', 'BBBBB', 'BDDDB'] },
-				{ edges: ['ABBBB', 'BCCCB', 'BBBBA', 'AAAAA'] },
-				{ edges: ['ABBBB', 'BBBBB', 'BBBBB', 'BBBBA'], skipSelf: true },
-				{ edges: ['BBBBB', 'BCCCB', 'BBBBB', 'BCCCB'] },
-				{ edges: ['BDDDB', 'BCCCB', 'BDDDB', 'BCCCB'] },
-				{ edges: ['BDDDB', 'BBBBB', 'BCCCB', 'BBBBB'] },
-				{ edges: ['BCCCB', 'BCCCB', 'BBBBB', 'BCCCB'] },
-				{ edges: ['BCCCB', 'BCCCB', 'BCCCB', 'BCCCB'] },
-				{ edges: ['BCCCB', 'BCCCB', 'BBBBB', 'BBBBB'] },
-				{ edges: ['BBBBB', 'BCCCB', 'BBBBB', 'BCCCB'] },
+				{ edges: ['AAA', 'AAA', 'AAA', 'AAA'] },
+				{ edges: ['BBB', 'BBB', 'BBB', 'BBB'] },
+				{ edges: ['BBB', 'BCB', 'BBB', 'BBB'] },
+				{ edges: ['BBB', 'BDB', 'BBB', 'BDB'] },
+				{ edges: ['ABB', 'BCB', 'BBA', 'AAA'] },
+				{ edges: ['ABB', 'BBB', 'BBB', 'BBA'], skipSelf: true },
+				{ edges: ['BBB', 'BCB', 'BBB', 'BCB'] },
+				{ edges: ['BDB', 'BCB', 'BDB', 'BCB'] },
+				{ edges: ['BDB', 'BBB', 'BCB', 'BBB'] },
+				{ edges: ['BCB', 'BCB', 'BBB', 'BCB'] },
+				{ edges: ['BCB', 'BCB', 'BCB', 'BCB'] },
+				{ edges: ['BCB', 'BCB', 'BBB', 'BBB'] },
+				{ edges: ['BBB', 'BCB', 'BBB', 'BCB'] },
 			];
 
 			return getTiles(configs, images);
@@ -85,13 +86,13 @@ export const getSetupV2 = (): ConfigResponse => {
 		(idx: number) => `t${idx + 1}.png`,
 		(images: Image[]) => {
 			const configs: Config[] = [
-				{ edges: ['AABAA', 'AABAA', 'AABAA', 'AABAA'], skipSelf: true },
-				{ edges: ['ABCBA', 'AABAA', 'ABCBA', 'AABAA'] },
-				{ edges: ['ABCBA', 'AABAA', 'ABCBA', 'AABAA'] },
-				{ edges: ['AAAAA', 'AAAAA', 'ABCBA', 'AAAAA'], skipSelf: true },
-				{ edges: ['AABAA', 'AAAAA', 'ABCBA', 'AAAAA'] },
-				{ edges: ['ABCBA', 'ABCBA', 'AAAAA', 'AAAAA'] },
-				{ edges: ['AABAA', 'AABAA', 'AABAA', 'AAAAA'] },
+				{ edges: ['ABA', 'ABA', 'ABA', 'ABA'], skipSelf: true },
+				{ edges: ['ACA', 'ABA', 'ACA', 'ABA'] },
+				{ edges: ['ACA', 'ABA', 'ACA', 'ABA'] },
+				{ edges: ['AAA', 'AAA', 'ACA', 'AAA'], skipSelf: true },
+				{ edges: ['ABA', 'AAA', 'ACA', 'AAA'] },
+				{ edges: ['ACA', 'ACA', 'AAA', 'AAA'] },
+				{ edges: ['ABA', 'ABA', 'ABA', 'AAA'] },
 			];
 
 			return getTiles(configs, images);
