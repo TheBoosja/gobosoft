@@ -3,23 +3,23 @@ import { useEffect, useState } from 'react';
 import { ReactP5Wrapper, Sketch } from 'react-p5-wrapper';
 import { getSetupV0, getSetupV1, getSetupV2, ConfigResponse } from './config';
 import { Tile, Grid, Framerate } from './models';
-import { withRotatedTilesFromP5 } from './utilities';
+import { printTiles, withRotatedTilesFromP5 } from './utilities';
 
 const setups = [() => getSetupV0(), () => getSetupV1(), () => getSetupV2()];
 
 const sketch =
 	(isOptimized: boolean): Sketch =>
 	(p5) => {
-		const DIMENSION = 32;
+		const DIMENSION = 20;
 		const SIZE = 800;
 
 		const tileImgs: Image[] = [];
 		let tiles: Tile[] = [];
 		let grid: Grid | null = null;
-		const config: ConfigResponse = setups[0]();
+		const config: ConfigResponse = setups[2]();
 
 		Grid.DEBUG = false;
-		Grid.TEST = false;
+		Grid.TEST = true;
 		// Logs framerate
 		Framerate.enable(false);
 
@@ -41,6 +41,7 @@ const sketch =
 			for (const tile of tiles) {
 				tile.analyze(tiles);
 			}
+			console.log(printTiles(tiles));
 
 			grid = new Grid(DIMENSION, tiles);
 
@@ -65,7 +66,7 @@ const sketch =
 	};
 
 const WaveFunctionCollapse = () => {
-	const [isOptimized, setOptimized] = useState(true);
+	const [isOptimized, setOptimized] = useState(false);
 
 	useEffect(() => {
 		return () => Framerate.clear();
