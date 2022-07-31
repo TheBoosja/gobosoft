@@ -1,7 +1,7 @@
 export interface IGrid<T> {
-	grid: T[][];
+  grid: T[][]
 }
 
 export class Grid {
-	constructor(dx: number, dy: number) {}
+  constructor(public dx: number, public dy: number) {}
 }

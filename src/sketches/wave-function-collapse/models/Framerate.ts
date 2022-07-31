@@ -1,5 +1,5 @@
 export default abstract class Framerate {
-	static count: number = 0;
+	static count = 0;
 	static handle: NodeJS.Timer | undefined = undefined;
 	static isEnabled = false;
 

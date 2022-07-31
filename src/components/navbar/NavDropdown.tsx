@@ -1,5 +1,5 @@
-import {ReactElement, useRef, useState} from "react";
-import {useOnClickOutside} from "../../common/hooks";
+import {ReactElement, useRef, useState} from 'react';
+import {useOnClickOutside} from '../../common/hooks';
 import NavItem, {INavItem} from './NavItem'
 
 export interface INavDropdown {

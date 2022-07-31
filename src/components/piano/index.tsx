@@ -29,9 +29,9 @@ const Piano = () => {
 
   const BlackKeys = () => {
     const Key = ({hidden}: {hidden?: boolean}) => {
-      let classNames = "bg-black"
+      let classNames = 'bg-black'
       if (hidden) {
-        classNames += " bg-transparent pointer-events-none"
+        classNames += ' bg-transparent pointer-events-none'
       }
 
       return (

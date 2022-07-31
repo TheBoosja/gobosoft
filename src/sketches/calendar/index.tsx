@@ -1,5 +1,5 @@
-import {ReactP5Wrapper, Sketch} from "react-p5-wrapper"
-import {useTitle} from "../../ducks/page"
+import {ReactP5Wrapper, Sketch} from 'react-p5-wrapper'
+import {useTitle} from '../../ducks/page'
 
 const sketch: Sketch = (p5) => {
   const theta = 360 / 365

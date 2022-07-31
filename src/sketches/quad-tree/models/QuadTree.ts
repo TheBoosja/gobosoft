@@ -1,41 +1,58 @@
-import {P5CanvasInstance} from "react-p5-wrapper";
-import {Boundary} from "./Boundary";
-import {Point} from "./Point";
+import { P5CanvasInstance } from 'react-p5-wrapper'
+import { Boundary } from './Boundary'
+import { Point } from './Point'
 
 export class QuadTree<T> {
-  static MAX_DEPTH = 8;
-  private points: Point<T>[] | null = [];
-  private isDivided: boolean = false;
+  static MAX_DEPTH = 8
+  private points: Point<T>[] | null = []
+  private isDivided = false
 
-  northwest: QuadTree<T> | null = null;
-  northeast: QuadTree<T> | null = null;
-  southwest: QuadTree<T> | null = null;
-  southeast: QuadTree<T> | null = null;
+  northwest: QuadTree<T> | null = null
+  northeast: QuadTree<T> | null = null
+  southwest: QuadTree<T> | null = null
+  southeast: QuadTree<T> | null = null
 
-  constructor(public boundary: Boundary<T>, public capacity: number, public depth: number) {}
+  constructor(
+    public boundary: Boundary<T>,
+    public capacity: number,
+    public depth: number
+  ) {}
 
   get sections() {
     if (!this.isDivided) {
       return []
     }
 
-    return [
-      this.northwest!,
-      this.northeast!,
-      this.southwest!,
-      this.southeast!
-    ]
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return [this.northwest!, this.northeast!, this.southwest!, this.southeast!]
   }
 
   subdivide = () => {
     const subdivitions = this.boundary.subdivide()
-    this.northwest = new QuadTree(subdivitions.nw, this.capacity, this.depth + 1)
-    this.northeast = new QuadTree(subdivitions.ne, this.capacity, this.depth + 1);
-    this.southwest = new QuadTree(subdivitions.sw, this.capacity, this.depth + 1);
-    this.southeast = new QuadTree(subdivitions.se, this.capacity, this.depth + 1);
+    this.northwest = new QuadTree(
+      subdivitions.nw,
+      this.capacity,
+      this.depth + 1
+    )
+    this.northeast = new QuadTree(
+      subdivitions.ne,
+      this.capacity,
+      this.depth + 1
+    )
+    this.southwest = new QuadTree(
+      subdivitions.sw,
+      this.capacity,
+      this.depth + 1
+    )
+    this.southeast = new QuadTree(
+      subdivitions.se,
+      this.capacity,
+      this.depth + 1
+    )
 
     this.isDivided = true
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     for (const p of this.points!) {
       const inserted =
         this.northwest.insert(p) ||
@@ -57,7 +74,12 @@ export class QuadTree<T> {
     }
 
     if (!this.isDivided) {
-      if (this.points!.length < this.capacity || this.depth === QuadTree.MAX_DEPTH) {
+      if (
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.points!.length < this.capacity ||
+        this.depth === QuadTree.MAX_DEPTH
+      ) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.points!.push(point)
         return true
       }
@@ -66,9 +88,13 @@ export class QuadTree<T> {
     }
 
     return (
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       this.northwest!.insert(point) ||
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       this.northeast!.insert(point) ||
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       this.southwest!.insert(point) ||
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       this.southeast!.insert(point)
     )
   }
@@ -80,6 +106,7 @@ export class QuadTree<T> {
     }
 
     if (!this.isDivided) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       for (const p of this.points!) {
         if (range.contains(p)) {
           result.push(p)
@@ -89,9 +116,13 @@ export class QuadTree<T> {
       return result
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.northwest!.query(range, result)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.northeast!.query(range, result)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.southwest!.query(range, result)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.southeast!.query(range, result)
     console.log('3', this.depth, result)
 
@@ -107,13 +138,13 @@ export class QuadTree<T> {
     this.southeast?.draw(p5)
   }
 
-  toString = (): any => {
+  toString = (): unknown => {
     return {
       p: this.boundary.toString(),
       nw: this.northwest?.toString(),
       ne: this.northeast?.toString(),
       sw: this.southwest?.toString(),
-      se: this.southeast?.toString()
+      se: this.southeast?.toString(),
     }
   }
 }

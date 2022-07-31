@@ -8,7 +8,7 @@ const make2DArray = (dimension: number): number[] => {
 const sketch: Sketch = (p5) => {
   const dimension = 150;
   let grid: number[];
-  //let gridOld: number[];
+  // let gridOld: number[];
 
   const getCell = (grd: number[], x: number, y: number) => {
     return grd[x + y * dimension];
@@ -20,7 +20,7 @@ const sketch: Sketch = (p5) => {
       grid = make2DArray(dimension).map(() => Math.floor(p5.random(2)));
     })
 
-    //gridOld = make2DArray(dimension);
+    // gridOld = make2DArray(dimension);
     grid = make2DArray(dimension).map(() => Math.floor(p5.random(2)));
 
     // p5.noLoop();
@@ -35,7 +35,7 @@ const sketch: Sketch = (p5) => {
     for (let y = 0; y < dimension; y++) {
       for (let x = 0; x < dimension; x++) {
         const cell = getCell(grid, x, y);
-        //const cellOld = getCell(gridOld, x, y);
+        // const cellOld = getCell(gridOld, x, y);
         if (cell === 1) {
           p5.fill('green');
           p5.noStroke();
@@ -89,7 +89,7 @@ const sketch: Sketch = (p5) => {
       }
     }
 
-    //gridOld = grid;
+    // gridOld = grid;
     grid = nextGen;
   };
 };

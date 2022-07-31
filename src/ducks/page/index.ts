@@ -1,7 +1,7 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {useEffect} from "react"
-import {useAppDispatch} from "../../common/hooks"
-import {RootState} from "../../store"
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {useEffect} from 'react'
+import {useAppDispatch} from '../../common/hooks'
+import {RootState} from '../../store'
 
 interface PageState {
   title: string

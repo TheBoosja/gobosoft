@@ -5,7 +5,7 @@ export type Edges = [string, string, string, string];
 
 export default class Tile {
 	index: number;
-	skipSelf: boolean = false;
+	skipSelf = false;
 	image: Image | Graphics;
 	edges: Edges;
 	validUps: number[];
@@ -87,7 +87,7 @@ export default class Tile {
 		const newEdges = [];
 		const len = this.edges.length;
 		for (let i = 0; i < len; i++) {
-			let edge = this.edges[(i - num + len) % len];
+			const edge = this.edges[(i - num + len) % len];
 			newEdges[i] = edge;
 		}
 

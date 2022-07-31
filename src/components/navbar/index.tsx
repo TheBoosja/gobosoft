@@ -1,7 +1,7 @@
-import {useAppSelector} from "../../common/hooks"
-import {selectTitle} from "../../ducks/page"
-import NavDropdown from "./NavDropdown"
-import NavItem from "./NavItem"
+import {useAppSelector} from '../../common/hooks'
+import {selectTitle} from '../../ducks/page'
+import NavDropdown from './NavDropdown'
+import NavItem from './NavItem'
 
 const Navbar = () => {
   const title = useAppSelector(selectTitle)
