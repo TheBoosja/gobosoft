@@ -3,6 +3,7 @@ import {Boundary} from "./Boundary";
 import {Point} from "./Point";
 
 export class QuadTree<T> {
+  static MAX_DEPTH = 8;
   private points: Point<T>[] | null = [];
   private isDivided: boolean = false;
 
@@ -11,14 +12,27 @@ export class QuadTree<T> {
   southwest: QuadTree<T> | null = null;
   southeast: QuadTree<T> | null = null;
 
-  constructor(public boundary: Boundary<T>, public size: number, public depth: number) {}
+  constructor(public boundary: Boundary<T>, public capacity: number, public depth: number) {}
+
+  get sections() {
+    if (!this.isDivided) {
+      return []
+    }
+
+    return [
+      this.northwest!,
+      this.northeast!,
+      this.southwest!,
+      this.southeast!
+    ]
+  }
 
   subdivide = () => {
     const subdivitions = this.boundary.subdivide()
-    this.northwest = new QuadTree(subdivitions.nw, this.size, this.depth + 1)
-    this.northeast = new QuadTree(subdivitions.ne, this.size, this.depth + 1);
-    this.southwest = new QuadTree(subdivitions.sw, this.size, this.depth + 1);
-    this.southeast = new QuadTree(subdivitions.se, this.size, this.depth + 1);
+    this.northwest = new QuadTree(subdivitions.nw, this.capacity, this.depth + 1)
+    this.northeast = new QuadTree(subdivitions.ne, this.capacity, this.depth + 1);
+    this.southwest = new QuadTree(subdivitions.sw, this.capacity, this.depth + 1);
+    this.southeast = new QuadTree(subdivitions.se, this.capacity, this.depth + 1);
 
     this.isDivided = true
 
@@ -30,8 +44,7 @@ export class QuadTree<T> {
         this.southeast.insert(p)
 
       if (!inserted) {
-        console.log(this, p)
-        throw new Error('Not inserted')
+        throw RangeError('capacity must be greater than 0')
       }
     }
 
@@ -40,12 +53,11 @@ export class QuadTree<T> {
 
   insert = (point: Point<T>): boolean => {
     if (!this.boundary.contains(point)) {
-      console.log('not within boundary', this.boundary.toString(), point)
       return false
     }
 
     if (!this.isDivided) {
-      if (this.points!.length < this.size) {
+      if (this.points!.length < this.capacity || this.depth === QuadTree.MAX_DEPTH) {
         this.points!.push(point)
         return true
       }
@@ -53,10 +65,37 @@ export class QuadTree<T> {
       this.subdivide()
     }
 
-    return this.northwest!.insert(point) ||
+    return (
+      this.northwest!.insert(point) ||
       this.northeast!.insert(point) ||
       this.southwest!.insert(point) ||
       this.southeast!.insert(point)
+    )
+  }
+
+  query = (range: Boundary<T>, result: Point<T>[] = []): Point<T>[] => {
+    if (!range.intersects(this.boundary)) {
+      console.log('1', this.depth, result)
+      return result
+    }
+
+    if (!this.isDivided) {
+      for (const p of this.points!) {
+        if (range.contains(p)) {
+          result.push(p)
+        }
+      }
+      console.log('2', this.depth, result)
+      return result
+    }
+
+    this.northwest!.query(range, result)
+    this.northeast!.query(range, result)
+    this.southwest!.query(range, result)
+    this.southeast!.query(range, result)
+    console.log('3', this.depth, result)
+
+    return result
   }
 
   draw = (p5: P5CanvasInstance) => {

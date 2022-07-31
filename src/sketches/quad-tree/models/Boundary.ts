@@ -13,6 +13,15 @@ export class Boundary<T> {
     )
   }
 
+  intersects = (range: Boundary<T>) => {
+    return !(
+      this.x > range.x + range.w ||
+      this.x + this.w < range.x ||
+      this.y > range.y + range.h ||
+      this.y + this.h < range.y
+    )
+  }
+
   subdivide = () => {
     return {
       ne: new Boundary(this.x + this.w / 2, this.y, this.w / 2, this.h / 2),
