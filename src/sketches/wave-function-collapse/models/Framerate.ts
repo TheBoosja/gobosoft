@@ -1,43 +1,43 @@
 export default abstract class Framerate {
-	static count = 0;
-	static handle: NodeJS.Timer | undefined = undefined;
-	static isEnabled = false;
+  static count = 0
+  static handle: NodeJS.Timer | undefined = undefined
+  static isEnabled = false
 
-	static enable = (enable: boolean) => {
-		if (enable === false) {
-			this.clear();
-		}
-		this.isEnabled = enable;
-	};
+  static enable = (enable: boolean) => {
+    if (enable === false) {
+      this.clear()
+    }
+    this.isEnabled = enable
+  }
 
-	static resetInterval = () => {
-		if (this.isEnabled === false) {
-			return;
-		}
+  static resetInterval = () => {
+    if (this.isEnabled === false) {
+      return
+    }
 
-		clearInterval(this.handle);
-		this.handle = setInterval(() => {
-			console.log('[Framerate]', this.count);
-			this.count = 0;
-		}, 1000);
-	};
+    clearInterval(this.handle)
+    this.handle = setInterval(() => {
+      console.log('[Framerate]', this.count)
+      this.count = 0
+    }, 1000)
+  }
 
-	static clear = () => {
-		if (this.isEnabled === false) {
-			return;
-		}
+  static clear = () => {
+    if (this.isEnabled === false) {
+      return
+    }
 
-		clearInterval(this.handle);
-		this.handle = undefined;
-	};
+    clearInterval(this.handle)
+    this.handle = undefined
+  }
 
-	static increment = () => {
-		if (this.isEnabled === false) {
-			return;
-		}
+  static increment = () => {
+    if (this.isEnabled === false) {
+      return
+    }
 
-		if (this.handle !== undefined) {
-			this.count++;
-		}
-	};
+    if (this.handle !== undefined) {
+      this.count++
+    }
+  }
 }

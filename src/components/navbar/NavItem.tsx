@@ -1,4 +1,4 @@
-import {useLocation, useNavigate} from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export interface INavItem {
   to: string
@@ -10,7 +10,7 @@ export interface INavItem {
   end?: boolean
 }
 
-const NavItem = ({to, label, onClick, end}: INavItem) => {
+const NavItem = ({ to, label, onClick, end }: INavItem) => {
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -29,11 +29,13 @@ const NavItem = ({to, label, onClick, end}: INavItem) => {
   }
 
   return (
-    <div className={isActive ? activeClassNames : itemClassNames} onClick={onItemClick}>
+    <div
+      className={isActive ? activeClassNames : itemClassNames}
+      onClick={onItemClick}
+    >
       {label}
     </div>
   )
 }
 
 export default NavItem
-

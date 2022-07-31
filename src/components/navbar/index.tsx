@@ -1,5 +1,5 @@
-import {useAppSelector} from '../../common/hooks'
-import {selectTitle} from '../../ducks/page'
+import { useAppSelector } from '../../common/hooks'
+import { selectTitle } from '../../ducks/page'
 import NavDropdown from './NavDropdown'
 import NavItem from './NavItem'
 
@@ -7,7 +7,7 @@ const Navbar = () => {
   const title = useAppSelector(selectTitle)
 
   return (
-    <div className="flex justify-end pr-5 max-w-[50rem] mx-auto">
+    <div className='flex justify-end pr-5 max-w-[50rem] mx-auto'>
       <h2 className='mr-auto p-2 tracking-widest text-white'>{title}</h2>
 
       <NavItem to='/' label='Home' end />
@@ -26,4 +26,3 @@ const Navbar = () => {
 }
 
 export default Navbar
-

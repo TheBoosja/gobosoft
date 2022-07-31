@@ -1,6 +1,6 @@
-import {ReactElement, useRef, useState} from 'react';
-import {useOnClickOutside} from '../../common/hooks';
-import NavItem, {INavItem} from './NavItem'
+import { ReactElement, useRef, useState } from 'react'
+import { useOnClickOutside } from '../../common/hooks'
+import NavItem, { INavItem } from './NavItem'
 
 export interface INavDropdown {
   to: string
@@ -8,8 +8,8 @@ export interface INavDropdown {
   children: ReactElement<INavItem>[]
 }
 
-const NavDropdown = ({to, label, children}: INavDropdown) => {
-  const ref = useRef<HTMLDivElement>(null);
+const NavDropdown = ({ to, label, children }: INavDropdown) => {
+  const ref = useRef<HTMLDivElement>(null)
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -30,8 +30,8 @@ const NavDropdown = ({to, label, children}: INavDropdown) => {
       onClick: () => {
         setIsOpen(false)
         return true
-      }
-    }
+      },
+    },
   })
 
   return (
@@ -45,4 +45,3 @@ const NavDropdown = ({to, label, children}: INavDropdown) => {
 }
 
 export default NavDropdown
-

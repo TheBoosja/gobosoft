@@ -3,8 +3,7 @@ import pageReducer from './page'
 
 const reducers = {
   counter: counterReducer,
-  page: pageReducer
+  page: pageReducer,
 }
 
 export default reducers
-

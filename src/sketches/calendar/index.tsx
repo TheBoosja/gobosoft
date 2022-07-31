@@ -1,5 +1,5 @@
-import {ReactP5Wrapper, Sketch} from 'react-p5-wrapper'
-import {useTitle} from '../../ducks/page'
+import { ReactP5Wrapper, Sketch } from 'react-p5-wrapper'
+import { useTitle } from '../../ducks/page'
 
 const sketch: Sketch = (p5) => {
   const theta = 360 / 365
@@ -15,7 +15,7 @@ const sketch: Sketch = (p5) => {
 
     const cX = p5.width / 2
     const cY = p5.height / 2
-    const r = p5.width * .9 / 2
+    const r = (p5.width * 0.9) / 2
 
     p5.translate(cX, cY)
     p5.noFill()

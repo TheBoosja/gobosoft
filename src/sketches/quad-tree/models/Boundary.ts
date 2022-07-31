@@ -1,8 +1,12 @@
-import {Point} from './Point'
+import { Point } from './Point'
 
 export class Boundary<T> {
-  constructor(public x: number, public y: number, public w: number, public h: number) {
-  }
+  constructor(
+    public x: number,
+    public y: number,
+    public w: number,
+    public h: number
+  ) {}
 
   contains = (point: Point<T>) => {
     return (
@@ -26,7 +30,12 @@ export class Boundary<T> {
     return {
       ne: new Boundary(this.x + this.w / 2, this.y, this.w / 2, this.h / 2),
       nw: new Boundary(this.x, this.y, this.w / 2, this.h / 2),
-      se: new Boundary(this.x + this.w / 2, this.y + this.h / 2, this.w / 2, this.h / 2),
+      se: new Boundary(
+        this.x + this.w / 2,
+        this.y + this.h / 2,
+        this.w / 2,
+        this.h / 2
+      ),
       sw: new Boundary(this.x, this.y + this.h / 2, this.w / 2, this.h / 2),
     }
   }

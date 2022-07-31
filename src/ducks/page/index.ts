@@ -1,14 +1,14 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {useEffect} from 'react'
-import {useAppDispatch} from '../../common/hooks'
-import {RootState} from '../../store'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { useEffect } from 'react'
+import { useAppDispatch } from '../../common/hooks'
+import { RootState } from '../../store'
 
 interface PageState {
   title: string
 }
 
 const initialState: PageState = {
-  title: ''
+  title: '',
 }
 
 export const pageSlice = createSlice({
@@ -17,11 +17,11 @@ export const pageSlice = createSlice({
   reducers: {
     setTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload
-    }
-  }
+    },
+  },
 })
 
-export const {setTitle} = pageSlice.actions
+export const { setTitle } = pageSlice.actions
 
 export const selectTitle = (state: RootState) => state.page.title
 

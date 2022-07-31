@@ -1,9 +1,9 @@
 import React from 'react'
-import {ReactP5Wrapper, Sketch} from 'react-p5-wrapper'
-import {useTitle} from '../../ducks/page'
-import {Boundary} from './models/Boundary'
-import {Point} from './models/Point'
-import {QuadTree} from './models/QuadTree'
+import { ReactP5Wrapper, Sketch } from 'react-p5-wrapper'
+import { useTitle } from '../../ducks/page'
+import { Boundary } from './models/Boundary'
+import { Point } from './models/Point'
+import { QuadTree } from './models/QuadTree'
 
 const sketch: Sketch = (p5) => {
   const SIZE = 800
@@ -36,7 +36,12 @@ const sketch: Sketch = (p5) => {
     p5.background(0)
     p5.noStroke()
 
-    const range = new Boundary(p5.mouseX - 100 / 2, p5.mouseY - 100 / 2, 100, 100)
+    const range = new Boundary(
+      p5.mouseX - 100 / 2,
+      p5.mouseY - 100 / 2,
+      100,
+      100
+    )
     const result = tree.query(range)
 
     for (const p of points) {
@@ -47,7 +52,6 @@ const sketch: Sketch = (p5) => {
       }
       p5.circle(p.x, p.y, 4)
     }
-
 
     p5.push()
     p5.noFill()
